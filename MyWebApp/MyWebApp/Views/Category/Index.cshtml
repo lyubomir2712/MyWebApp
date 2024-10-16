@@ -1,8 +1,24 @@
-@model dynamic
+@model List<Category> 
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
-}
-
-<h2>title</h2>
+<h1>Category List</h1>
+<table class="table table-borderd table-striped">
+    <tr>
+        <th>
+            Category Name
+        </th>
+        <th>
+            Display Order
+        </th>
+    </tr>
+    <tbody>
+    @foreach (var obj in Model.OrderBy(u=>u.DisplayOrder))
+    {
+        <tr>
+            <td>@obj.Name</td>
+            <td>
+                @obj.Id
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
