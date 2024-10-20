@@ -1,21 +1,24 @@
+using Contracts.CRUDContracts;
+using Data.Data;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using MyWebApp.Data;
-using MyWebApp.Models;
+using MyWebApp.Data.Implementation.CRUD;
 
 namespace MyWebApp.Controllers;
 
 public class CategoryController : Controller
 {
-
-    private readonly ApplicationDbContext _dbContext;
-    public CategoryController(ApplicationDbContext dbContext)
+    private readonly IReadCategoriesService? _readCategoriesService;
+    private readonly ApplicationDbContext? _dbContext;
+    
+    public CategoryController(ApplicationDbContext dbContext, IReadCategoriesService readCategoriesService)
     {
         _dbContext = dbContext;
+        _readCategoriesService = readCategoriesService;
     }
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        List<Category> objCategoryList = _dbContext.Categories.ToList();
+        List<Category> objCategoryList = _readCategoriesService.GetAllCategoriesAsync(_dbContext);
         return View(objCategoryList);
     }
 
@@ -49,8 +52,6 @@ public class CategoryController : Controller
             return NotFound();
         }
         Category? categoryFromDb = _dbContext.Categories.Find(id);
-        // Category? categoryFromDb1 = _dbContext.Categories.FirstOrDefault(u=>u.Id==id);
-        // Category? categoryFromDb2 = _dbContext.Categories.Where(u => u.Id == id).FirstOrDefault();
         
         if (categoryFromDb == null)
         {
