@@ -10,7 +10,6 @@ public class ReadCategoriesService : IReadCategoriesService
 {
     public async Task<List<Category>> GetAllCategoriesAsync(ApplicationDbContext _dbContext)
     {
-        List<Category> objCategoryList = await _dbContext.Categories.ToListAsync();
-        return objCategoryList;
+        return await _dbContext.Categories.ToListAsync();
     }
 }

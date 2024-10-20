@@ -8,7 +8,6 @@ public class UpdateCategoryService : IUpdateCategoryService
 {
     public async Task<Category?> UpdateCategoryAsync(ApplicationDbContext dbContext, int? id)
     {
-        Category? categoryFromDb = await dbContext.Categories.FindAsync(id);
-        return categoryFromDb;
+        return await dbContext.Categories.FindAsync(id);
     }
 }

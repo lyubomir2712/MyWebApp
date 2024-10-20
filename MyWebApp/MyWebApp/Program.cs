@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IReadCategoriesService, ReadCategoriesService>();
 builder.Services.AddScoped<ICreateCategoryService, CreateCategoryService>();
 builder.Services.AddScoped<IUpdateCategoryService, UpdateCategoryService>();
+builder.Services.AddScoped<IDeleteCategoryService, DeleteCategoryService>();
 
 var app = builder.Build();
 

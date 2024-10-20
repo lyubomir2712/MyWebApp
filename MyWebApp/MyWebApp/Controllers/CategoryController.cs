@@ -13,17 +13,20 @@ public class CategoryController : Controller
     private readonly ApplicationDbContext? _dbContext;
     private readonly ICreateCategoryService? _createCategoryService;
     private readonly IUpdateCategoryService? _updateCategoryService;
+    private readonly IDeleteCategoryService? _deleteCategoryService;
     public CategoryController(ApplicationDbContext dbContext, IReadCategoriesService readCategoriesService,
-        ICreateCategoryService createCategoryService, IUpdateCategoryService updateCategoryService)
+        ICreateCategoryService createCategoryService, IUpdateCategoryService updateCategoryService,
+        IDeleteCategoryService deleteCategoryService)
     {
         _dbContext = dbContext;
         _readCategoriesService = readCategoriesService;
         _createCategoryService = createCategoryService;
         _updateCategoryService = updateCategoryService;
+        _deleteCategoryService = deleteCategoryService;
     }
     public async Task<IActionResult> Index()
     {
-        List<Category> objCategoryList = await _readCategoriesService?.GetAllCategoriesAsync(_dbContext);
+        var objCategoryList = await _readCategoriesService?.GetAllCategoriesAsync(_dbContext);
         return View(objCategoryList);
     }
 
@@ -57,7 +60,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        Category categoryFromDb = await _updateCategoryService?.UpdateCategoryAsync(_dbContext, id);
+        var categoryFromDb = await _updateCategoryService?.UpdateCategoryAsync(_dbContext, id);
         
         if (categoryFromDb == null)
         {
@@ -80,13 +83,14 @@ public class CategoryController : Controller
     }
     
     
-    public IActionResult Delete(int? id)
+    public async Task<IActionResult> Delete(int? id)
     {
         if (id == null || id == 0)
         {
             return NotFound();
         }
-        Category? categoryFromDb = _dbContext.Categories.Find(id);
+
+        var categoryFromDb = await _deleteCategoryService.DeleteCategoryAsync();
         
         if (categoryFromDb == null)
         {
