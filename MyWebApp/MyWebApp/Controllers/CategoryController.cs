@@ -74,8 +74,8 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            _dbContext.Categories.Update(obj);
-            _dbContext.SaveChanges();
+            _dbContext?.Categories.Update(obj);
+            _dbContext?.SaveChanges();
             TempData["success"] = "Category updated successfully";
             return RedirectToAction("Index");
         }
@@ -90,7 +90,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = await _deleteCategoryService.DeleteCategoryAsync();
+        var categoryFromDb = await _deleteCategoryService.DeleteCategoryAsync(id);
         
         if (categoryFromDb == null)
         {
@@ -102,12 +102,12 @@ public class CategoryController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePost(int? id)
     {
-        Category? obj = _dbContext.Categories.Find(id);
+        Category? obj = _dbContext?.Categories.Find(id);
         
         if (obj == null) return NotFound();
         
-        _dbContext.Categories.Remove(obj);
-        _dbContext.SaveChanges();
+        _dbContext?.Categories.Remove(obj);
+        _dbContext?.SaveChanges();
         TempData["success"] = "Category deleted successfully";
         return RedirectToAction("Index");
     }

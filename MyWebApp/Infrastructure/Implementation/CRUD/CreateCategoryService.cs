@@ -6,7 +6,7 @@ namespace MyWebApp.Data.Implementation.CRUD;
 
 public class CreateCategoryService : ICreateCategoryService
 {
-    public async void CreateCategoryAsync(ApplicationDbContext dbContext, Category obj)
+    public async void CreateCategoryAsync(ApplicationDbContext? dbContext, Category obj)
     {
         await dbContext.Categories.AddAsync(obj);
         await dbContext.SaveChangesAsync();
