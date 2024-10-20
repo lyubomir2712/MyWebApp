@@ -2,6 +2,7 @@ using Contracts.CRUDContracts;
 using Data.Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using MyWebApp.Data.Contracts.CRUDcontracts;
 using MyWebApp.Data.Implementation.CRUD;
 
 namespace MyWebApp.Controllers;
@@ -10,15 +11,19 @@ public class CategoryController : Controller
 {
     private readonly IReadCategoriesService? _readCategoriesService;
     private readonly ApplicationDbContext? _dbContext;
-    
-    public CategoryController(ApplicationDbContext dbContext, IReadCategoriesService readCategoriesService)
+    private readonly ICreateCategoryService? _createCategoryService;
+    private readonly IUpdateCategoryService? _updateCategoryService;
+    public CategoryController(ApplicationDbContext dbContext, IReadCategoriesService readCategoriesService,
+        ICreateCategoryService createCategoryService, IUpdateCategoryService updateCategoryService)
     {
         _dbContext = dbContext;
         _readCategoriesService = readCategoriesService;
+        _createCategoryService = createCategoryService;
+        _updateCategoryService = updateCategoryService;
     }
     public async Task<IActionResult> Index()
     {
-        List<Category> objCategoryList = _readCategoriesService.GetAllCategoriesAsync(_dbContext);
+        List<Category> objCategoryList = await _readCategoriesService?.GetAllCategoriesAsync(_dbContext);
         return View(objCategoryList);
     }
 
@@ -27,6 +32,7 @@ public class CategoryController : Controller
         return View();
     }
 
+    
     [HttpPost]
     public IActionResult Create(Category obj)
     {
@@ -36,8 +42,7 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _dbContext.Categories.Add(obj);
-            _dbContext.SaveChanges();
+            _createCategoryService?.CreateCategoryAsync(_dbContext, obj);
             TempData["success"] = "Category created successfully";
             return RedirectToAction("Index");
         }
@@ -45,13 +50,14 @@ public class CategoryController : Controller
     }
     
     
-    public IActionResult Edit(int? id)
+    public async Task<IActionResult> Edit(int? id)
     {
         if (id == null || id == 0)
         {
             return NotFound();
         }
-        Category? categoryFromDb = _dbContext.Categories.Find(id);
+
+        Category categoryFromDb = await _updateCategoryService?.UpdateCategoryAsync(_dbContext, id);
         
         if (categoryFromDb == null)
         {

@@ -6,5 +6,5 @@ namespace Contracts.CRUDContracts;
 
 public interface IReadCategoriesService
 {
-    public List<Category> GetAllCategoriesAsync(ApplicationDbContext _dbContext);
+    public Task<List<Category>> GetAllCategoriesAsync(ApplicationDbContext _dbContext);
 }

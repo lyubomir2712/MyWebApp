@@ -1,6 +1,7 @@
 using Contracts.CRUDContracts;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
+using MyWebApp.Data.Contracts.CRUDcontracts;
 using MyWebApp.Data.Implementation.CRUD;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 //CRUD
 builder.Services.AddScoped<IReadCategoriesService, ReadCategoriesService>();
+builder.Services.AddScoped<ICreateCategoryService, CreateCategoryService>();
+builder.Services.AddScoped<IUpdateCategoryService, UpdateCategoryService>();
 
 var app = builder.Build();
 
