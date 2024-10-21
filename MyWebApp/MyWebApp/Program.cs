@@ -1,15 +1,34 @@
+using Contracts.CRUDContracts;
+using Data.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using MyWebApp.Data.Contracts.CRUDcontracts;
+using MyWebApp.Data.Implementation.CRUD;
+using MyWebApp.Data.Implementation.CRUD.Create;
+using MyWebApp.Data.Implementation.CRUD.Delete;
+using MyWebApp.Data.Implementation.CRUD.Read;
+using MyWebApp.Data.Implementation.CRUD.Update;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+//CRUD
+builder.Services.AddScoped<IReadCategoriesService, ReadCategoriesService>();
+builder.Services.AddScoped<ICreateCategoryService, CreateCategoryService>();
+builder.Services.AddScoped<IGetUpdateCategoryService, GetUpdateCategoryService>();
+builder.Services.AddScoped<IPostUpdateCategoryService, PostUpdateCategoryService>();
+builder.Services.AddScoped<IGetDeleteCategoryService, GetDeleteCategoryService>();
+builder.Services.AddScoped<IPostDeleteCategoryService, PostDeleteCategoryService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
