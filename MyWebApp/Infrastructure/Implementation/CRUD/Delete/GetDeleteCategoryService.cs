@@ -8,6 +8,6 @@ public class GetDeleteCategoryService : IGetDeleteCategoryService
 {
     public async Task<Category?> GetDeleteCategoryAsync(ApplicationDbContext dbContext, int? id)
     {
-        return dbContext.Categories.Find(id);
+        return await dbContext.Categories.FindAsync(id);
     }
 }

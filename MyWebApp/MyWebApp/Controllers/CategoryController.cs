@@ -42,7 +42,7 @@ public class CategoryController : Controller
 
     
     [HttpPost]
-    public IActionResult Create(Category obj)
+    public async Task<IActionResult> Create(Category obj)
     {
         if (obj.Name == obj.DisplayOrder.ToString())
         {
@@ -50,7 +50,7 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _createCategoryService?.CreateCategoryAsync(_dbContext, obj);
+            await _createCategoryService?.CreateCategoryAsync(_dbContext, obj);
             TempData["success"] = "Category created successfully";
             return RedirectToAction("Index");
         }
@@ -75,11 +75,11 @@ public class CategoryController : Controller
     }
     
     [HttpPost]
-    public IActionResult Edit(Category obj)
+    public async Task<IActionResult> Edit(Category obj)
     {
         if (ModelState.IsValid)
         {
-            _postUpdateCategoryService?.PostUpdateCategoryServiceAsync(_dbContext, obj);
+            await _postUpdateCategoryService?.PostUpdateCategoryServiceAsync(_dbContext, obj);
             TempData["success"] = "Category updated successfully";
             return RedirectToAction("Index");
         }
