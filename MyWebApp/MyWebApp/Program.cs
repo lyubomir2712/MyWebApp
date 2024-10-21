@@ -1,8 +1,13 @@
 using Contracts.CRUDContracts;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using MyWebApp.Data.Contracts.CRUDcontracts;
 using MyWebApp.Data.Implementation.CRUD;
+using MyWebApp.Data.Implementation.CRUD.Create;
+using MyWebApp.Data.Implementation.CRUD.Delete;
+using MyWebApp.Data.Implementation.CRUD.Read;
+using MyWebApp.Data.Implementation.CRUD.Update;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +15,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 //CRUD
 builder.Services.AddScoped<IReadCategoriesService, ReadCategoriesService>();
 builder.Services.AddScoped<ICreateCategoryService, CreateCategoryService>();
-builder.Services.AddScoped<IUpdateCategoryService, UpdateCategoryService>();
-builder.Services.AddScoped<IDeleteCategoryService, DeleteCategoryService>();
+builder.Services.AddScoped<IGetUpdateCategoryService, GetUpdateCategoryService>();
+builder.Services.AddScoped<IPostUpdateCategoryService, PostUpdateCategoryService>();
+builder.Services.AddScoped<IGetDeleteCategoryService, GetDeleteCategoryService>();
+builder.Services.AddScoped<IPostDeleteCategoryService, PostDeleteCategoryService>();
 
 var app = builder.Build();
 

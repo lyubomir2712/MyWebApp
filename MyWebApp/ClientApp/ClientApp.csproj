@@ -6,12 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Interactor\Interactor.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="CRUDContracts\Delete\" />
-    </ItemGroup>
-
 </Project>

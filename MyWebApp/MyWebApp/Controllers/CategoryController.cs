@@ -9,20 +9,25 @@ namespace MyWebApp.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly IReadCategoriesService? _readCategoriesService;
     private readonly ApplicationDbContext? _dbContext;
+    private readonly IReadCategoriesService? _readCategoriesService;
     private readonly ICreateCategoryService? _createCategoryService;
-    private readonly IUpdateCategoryService? _updateCategoryService;
-    private readonly IDeleteCategoryService? _deleteCategoryService;
+    private readonly IGetUpdateCategoryService? _getUpdateCategoryService;
+    private readonly IPostUpdateCategoryService? _postUpdateCategoryService;
+    private readonly IGetDeleteCategoryService? _getDeleteCategoryService;
+    private readonly IPostDeleteCategoryService? _postDeleteCategoryService;
     public CategoryController(ApplicationDbContext dbContext, IReadCategoriesService readCategoriesService,
-        ICreateCategoryService createCategoryService, IUpdateCategoryService updateCategoryService,
-        IDeleteCategoryService deleteCategoryService)
+        ICreateCategoryService createCategoryService, IGetUpdateCategoryService getUpdateCategoryService,
+        IPostUpdateCategoryService postUpdateCategoryService,IGetDeleteCategoryService getDeleteCategoryService,
+        IPostDeleteCategoryService postDeleteCategoryService)
     {
         _dbContext = dbContext;
         _readCategoriesService = readCategoriesService;
         _createCategoryService = createCategoryService;
-        _updateCategoryService = updateCategoryService;
-        _deleteCategoryService = deleteCategoryService;
+        _getUpdateCategoryService = getUpdateCategoryService;
+        _postUpdateCategoryService = postUpdateCategoryService;
+        _getDeleteCategoryService = getDeleteCategoryService;
+        _postDeleteCategoryService = postDeleteCategoryService;
     }
     public async Task<IActionResult> Index()
     {
@@ -60,7 +65,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = await _updateCategoryService?.UpdateCategoryAsync(_dbContext, id);
+        var categoryFromDb = await _getUpdateCategoryService?.GetUpdateCategoryAsync(_dbContext, id);
         
         if (categoryFromDb == null)
         {
@@ -74,8 +79,7 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            _dbContext?.Categories.Update(obj);
-            _dbContext?.SaveChanges();
+            _postUpdateCategoryService?.PostUpdateCategoryServiceAsync(_dbContext, obj);
             TempData["success"] = "Category updated successfully";
             return RedirectToAction("Index");
         }
@@ -90,7 +94,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = await _deleteCategoryService.DeleteCategoryAsync(id);
+        var categoryFromDb = await _getDeleteCategoryService.GetDeleteCategoryAsync(_dbContext, id);
         
         if (categoryFromDb == null)
         {
@@ -100,14 +104,13 @@ public class CategoryController : Controller
     }
     
     [HttpPost, ActionName("Delete")]
-    public IActionResult DeletePost(int? id)
+    public async Task<IActionResult> DeletePost(int? id)
     {
-        Category? obj = _dbContext?.Categories.Find(id);
+        var obj = await _getDeleteCategoryService.GetDeleteCategoryAsync(_dbContext, id);
         
         if (obj == null) return NotFound();
-        
-        _dbContext?.Categories.Remove(obj);
-        _dbContext?.SaveChanges();
+
+        await _postDeleteCategoryService.PostDeleteCategoryAsync(_dbContext, obj);
         TempData["success"] = "Category deleted successfully";
         return RedirectToAction("Index");
     }

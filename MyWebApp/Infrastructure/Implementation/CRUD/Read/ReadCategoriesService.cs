@@ -3,8 +3,7 @@ using Data.Data;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-
-namespace MyWebApp.Data.Implementation.CRUD;
+namespace MyWebApp.Data.Implementation.CRUD.Read;
 
 public class ReadCategoriesService : IReadCategoriesService
 {

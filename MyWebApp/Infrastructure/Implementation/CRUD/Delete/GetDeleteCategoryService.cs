@@ -4,9 +4,9 @@ using MyWebApp.Data.Contracts.CRUDcontracts;
 
 namespace MyWebApp.Data.Implementation.CRUD;
 
-public class DeleteCategoryService : IDeleteCategoryService
+public class GetDeleteCategoryService : IGetDeleteCategoryService
 {
-    public async Task<Category?> DeleteCategoryAsync(ApplicationDbContext dbContext, int? id)
+    public async Task<Category?> GetDeleteCategoryAsync(ApplicationDbContext dbContext, int? id)
     {
         return dbContext.Categories.Find(id);
     }
