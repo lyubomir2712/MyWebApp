@@ -1,5 +1,7 @@
 using Contracts.CRUDContracts;
+using Contracts.CRUDContracts.Delete;
 using Data.Data;
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using MyWebApp.Data.Contracts.CRUDcontracts;
@@ -15,7 +17,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+Env.Load();
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionString;
 //CRUD
 builder.Services.AddScoped<IReadCategoriesService, ReadCategoriesService>();
 builder.Services.AddScoped<ICreateCategoryService, CreateCategoryService>();
