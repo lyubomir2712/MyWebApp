@@ -1,9 +1,9 @@
 using Contracts.CRUDContracts;
+using Contracts.CRUDContracts.Delete;
 using Data.Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyWebApp.Data.Contracts.CRUDcontracts;
-using MyWebApp.Data.Implementation.CRUD;
 
 namespace MyWebApp.Controllers;
 
