@@ -1,7 +1,7 @@
 using Data.Data;
 using Data.Models;
 
-namespace MyWebApp.Data.Contracts.CRUDcontracts;
+namespace Contracts.CRUDContracts.Delete;
 
 public interface IGetDeleteCategoryService
 {

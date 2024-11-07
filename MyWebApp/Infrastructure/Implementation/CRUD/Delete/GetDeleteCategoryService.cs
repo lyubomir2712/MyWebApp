@@ -1,3 +1,4 @@
+using Contracts.CRUDContracts.Delete;
 using Data.Data;
 using Data.Models;
 using MyWebApp.Data.Contracts.CRUDcontracts;
