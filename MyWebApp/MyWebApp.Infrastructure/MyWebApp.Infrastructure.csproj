@@ -4,10 +4,11 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>MyWebApp.Data</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Interactor\Interactor.csproj" />
+      <ProjectReference Include="..\MyWebApp.Contracts\MyWebApp.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

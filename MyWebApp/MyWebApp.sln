@@ -2,13 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp", "MyWebApp\MyWebApp.csproj", "{1AA83BFC-9BD0-4317-9059-7D212FF12B06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{75542245-F96D-4056-9A3A-144D1EA686D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp.Infrastructure", "MyWebApp.Infrastructure\MyWebApp.Infrastructure.csproj", "{75542245-F96D-4056-9A3A-144D1EA686D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interactor", "Interactor\Interactor.csproj", "{45335314-D3CC-476E-9F1C-4A0B0B805BD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp.Interactor", "MyWebApp.Interactor\MyWebApp.Interactor.csproj", "{45335314-D3CC-476E-9F1C-4A0B0B805BD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{196FB199-6117-4D9C-B045-8B1C97EF459F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp", "ClientApp\ClientApp.csproj", "{310B2C48-8A0B-4312-AA27-41F6AAB510C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp.Contracts", "MyWebApp.Contracts\MyWebApp.Contracts.csproj", "{196FB199-6117-4D9C-B045-8B1C97EF459F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +30,5 @@ Global
 		{196FB199-6117-4D9C-B045-8B1C97EF459F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{196FB199-6117-4D9C-B045-8B1C97EF459F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{196FB199-6117-4D9C-B045-8B1C97EF459F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{310B2C48-8A0B-4312-AA27-41F6AAB510C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{310B2C48-8A0B-4312-AA27-41F6AAB510C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{310B2C48-8A0B-4312-AA27-41F6AAB510C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{310B2C48-8A0B-4312-AA27-41F6AAB510C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
