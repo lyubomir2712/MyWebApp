@@ -1,9 +1,10 @@
 using Data.Data;
 using Data.Models;
+using Data.Repository;
 
 namespace Contracts.CRUDContracts;
 
 public interface IGetUpdateCategoryService
 {
-    public Task<Category?> GetUpdateCategoryAsync(ApplicationDbContext dbContext, int? id);
+    public Category? GetUpdateCategoryAsync(ICategoryRepository categoryRepo, int? id);
 }

@@ -1,15 +1,18 @@
 using Contracts.CRUDContracts;
+using Contracts.CRUDContracts.Update;
 using Data.Data;
 using Data.Models;
+using Data.Repository;
 using Microsoft.EntityFrameworkCore;
+using MyWebApp.Data.Contracts.CRUDcontracts;
 
 namespace MyWebApp.Data.Implementation.CRUD.Update;
 
 public class PostUpdateCategoryService : IPostUpdateCategoryService
 {
-    public async Task PostUpdateCategoryServiceAsync(ApplicationDbContext dbContext, Category obj)
+    public void PostUpdateCategoryServiceAsync(ICategoryRepository categoryRepo, Category obj)
     {
-        dbContext?.Categories.Update(obj);
-        await dbContext.SaveChangesAsync();
+        categoryRepo.Update(obj);
+        categoryRepo.Save();
     }
 }
