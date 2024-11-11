@@ -23,7 +23,7 @@ public class Repository<T> : IRepository<T> where T : class
         return query.FirstOrDefault();
     }
     
-    public IEnumerable<T> GetAll(T entity)
+    public IEnumerable<T> GetAll()
     {
         IQueryable<T> query = dbSet;
         return query.ToList();
