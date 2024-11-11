@@ -1,10 +1,11 @@
 using Contracts.ModelContracts;
 using Data.Data;
 using Data.Models;
+using Data.Repository;
 
 namespace Contracts.CRUDContracts;
 
 public interface IReadCategoriesService
 {
-    public Task<List<Category>> GetAllCategoriesAsync(ApplicationDbContext _dbContext);
+    public List<Category> GetAllCategoriesAsync(ICategoryRepository categoryRepo);
 }

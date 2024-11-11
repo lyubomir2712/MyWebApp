@@ -20,6 +20,6 @@ public class CategoryRepository : Repository<Category>,  ICategoryRepository
 
     public void Save()
     {
-        throw new NotImplementedException();
+        _db.SaveChanges();
     }
 }
