@@ -22,7 +22,7 @@ namespace MyWebApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MyWebApp.Models.Category", b =>
+            modelBuilder.Entity("MyWebApp.Presentation.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
