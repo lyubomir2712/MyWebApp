@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp", "MyWebApp\MyWebApp.csproj", "{1AA83BFC-9BD0-4317-9059-7D212FF12B06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp.Presentation", "MyWebApp.Presentation\MyWebApp.Presentation.csproj", "{1AA83BFC-9BD0-4317-9059-7D212FF12B06}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWebApp.Infrastructure", "MyWebApp.Infrastructure\MyWebApp.Infrastructure.csproj", "{75542245-F96D-4056-9A3A-144D1EA686D6}"
 EndProject
