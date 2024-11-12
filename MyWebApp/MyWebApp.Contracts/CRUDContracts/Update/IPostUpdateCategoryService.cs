@@ -1,10 +1,11 @@
 using Data.Data;
 using Data.Models;
 using Data.Repository;
+using Data.Repository.IRepository;
 
 namespace Contracts.CRUDContracts.Update;
 
 public interface IPostUpdateCategoryService
 {
-    public void PostUpdateCategoryServiceAsync(ICategoryRepository categoryRepo, Category obj);
+    public void PostUpdateCategoryServiceAsync(IUnitOfWork unitOfWork, Category obj);
 }
