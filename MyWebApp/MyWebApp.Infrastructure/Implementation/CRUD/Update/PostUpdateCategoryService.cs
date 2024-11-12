@@ -3,6 +3,7 @@ using Contracts.CRUDContracts.Update;
 using Data.Data;
 using Data.Models;
 using Data.Repository;
+using Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using MyWebApp.Data.Contracts.CRUDcontracts;
 
@@ -10,9 +11,9 @@ namespace MyWebApp.Data.Implementation.CRUD.Update;
 
 public class PostUpdateCategoryService : IPostUpdateCategoryService
 {
-    public void PostUpdateCategoryServiceAsync(ICategoryRepository categoryRepo, Category obj)
+    public void PostUpdateCategoryServiceAsync(IUnitOfWork unitOfWork, Category obj)
     {
-        categoryRepo.Update(obj);
-        categoryRepo.Save();
+        unitOfWork.Category.Update(obj);
+        unitOfWork.Save();
     }
 }

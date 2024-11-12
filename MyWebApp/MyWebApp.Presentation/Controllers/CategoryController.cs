@@ -4,6 +4,7 @@ using Contracts.CRUDContracts.Update;
 using Data.Data;
 using Data.Models;
 using Data.Repository;
+using Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using MyWebApp.Data.Contracts.CRUDcontracts;
 
@@ -11,19 +12,19 @@ namespace MyWebApp.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly ICategoryRepository? _categoryRepo;
+    private readonly IUnitOfWork? _unitOfWork;
     private readonly IReadCategoriesService? _readCategoriesService;
     private readonly ICreateCategoryService? _createCategoryService;
     private readonly IGetUpdateCategoryService? _getUpdateCategoryService;
     private readonly IPostUpdateCategoryService? _postUpdateCategoryService;
     private readonly IGetDeleteCategoryService? _getDeleteCategoryService;
     private readonly IPostDeleteCategoryService? _postDeleteCategoryService;
-    public CategoryController(ICategoryRepository categoryRepo, IReadCategoriesService readCategoriesService,
+    public CategoryController(IUnitOfWork unitOfWork, IReadCategoriesService readCategoriesService,
         ICreateCategoryService createCategoryService, IGetUpdateCategoryService getUpdateCategoryService,
         IPostUpdateCategoryService postUpdateCategoryService,IGetDeleteCategoryService getDeleteCategoryService,
         IPostDeleteCategoryService postDeleteCategoryService)
     {
-        _categoryRepo = categoryRepo;
+        _unitOfWork = unitOfWork;
         _readCategoriesService = readCategoriesService;
         _createCategoryService = createCategoryService;
         _getUpdateCategoryService = getUpdateCategoryService;
@@ -33,7 +34,7 @@ public class CategoryController : Controller
     }
     public IActionResult Index()
     {
-        var objCategoryList = _readCategoriesService?.GetAllCategoriesAsync(_categoryRepo);
+        var objCategoryList = _readCategoriesService?.GetAllCategoriesAsync(_unitOfWork);
         return View(objCategoryList);
     }
 
@@ -52,7 +53,7 @@ public class CategoryController : Controller
         }
         if (ModelState.IsValid)
         {
-            _createCategoryService?.CreateCategoryAsync(_categoryRepo, obj);
+            _createCategoryService?.CreateCategoryAsync(_unitOfWork, obj);
             TempData["success"] = "Category created successfully";
             return RedirectToAction("Index");
         }
@@ -67,7 +68,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = _getUpdateCategoryService?.GetUpdateCategoryAsync(_categoryRepo, id);
+        var categoryFromDb = _getUpdateCategoryService?.GetUpdateCategoryAsync(_unitOfWork, id);
         
         if (categoryFromDb == null)
         {
@@ -81,7 +82,7 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            _postUpdateCategoryService?.PostUpdateCategoryServiceAsync(_categoryRepo, obj);
+            _postUpdateCategoryService?.PostUpdateCategoryServiceAsync(_unitOfWork, obj);
             TempData["success"] = "Category updated successfully";
             return RedirectToAction("Index");
         }
@@ -96,7 +97,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = _getDeleteCategoryService.GetDeleteCategoryAsync(_categoryRepo, id);
+        var categoryFromDb = _getDeleteCategoryService.GetDeleteCategoryAsync(_unitOfWork, id);
         
         if (categoryFromDb == null)
         {
@@ -108,11 +109,11 @@ public class CategoryController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePost(int? id)
     {
-        var obj = _getDeleteCategoryService.GetDeleteCategoryAsync(_categoryRepo, id);
+        var obj = _getDeleteCategoryService.GetDeleteCategoryAsync(_unitOfWork, id);
         
         if (obj == null) return NotFound();
 
-        _postDeleteCategoryService.PostDeleteCategoryAsync(_categoryRepo, obj);
+        _postDeleteCategoryService.PostDeleteCategoryAsync(_unitOfWork, obj);
         TempData["success"] = "Category deleted successfully";
         return RedirectToAction("Index");
     }
