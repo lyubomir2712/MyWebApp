@@ -1,10 +1,11 @@
 using Data.Data;
 using Data.Models;
 using Data.Repository;
+using Data.Repository.IRepository;
 
 namespace Contracts.CRUDContracts;
 
 public interface IGetUpdateCategoryService
 {
-    public Category? GetUpdateCategoryAsync(ICategoryRepository categoryRepo, int? id);
+    public Category? GetUpdateCategoryAsync(IUnitOfWork unitOfWork, int? id);
 }

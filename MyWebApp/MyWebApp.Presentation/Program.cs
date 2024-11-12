@@ -3,6 +3,7 @@ using Contracts.CRUDContracts.Delete;
 using Contracts.CRUDContracts.Update;
 using Data.Data;
 using Data.Repository;
+using Data.Repository.IRepository;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IPostUpdateCategoryService, PostUpdateCategoryService
 builder.Services.AddScoped<IGetDeleteCategoryService, GetDeleteCategoryService>();
 builder.Services.AddScoped<IPostDeleteCategoryService, PostDeleteCategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork> ();
 
 var app = builder.Build();
 
