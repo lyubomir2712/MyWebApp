@@ -8,7 +8,7 @@ using Data.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using MyWebApp.Data.Contracts.CRUDcontracts;
 
-namespace MyWebApp.Controllers;
+namespace MyWebApp.Areas.Admin.Controllers;
 
 public class CategoryController : Controller
 {
