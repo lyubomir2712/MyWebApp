@@ -10,6 +10,7 @@ using MyWebApp.Data.Contracts.CRUDcontracts;
 
 namespace MyWebApp.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class CategoryController : Controller
 {
     private readonly IUnitOfWork? _unitOfWork;
