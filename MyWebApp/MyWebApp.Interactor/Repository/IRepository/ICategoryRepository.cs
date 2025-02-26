@@ -1,7 +1,6 @@
 using Data.Models;
-using Data.Repository.IRepository;
 
-namespace Data.Repository;
+namespace Data.Repository.IRepository;
 
 public interface ICategoryRepository : IRepository<Category>
 {

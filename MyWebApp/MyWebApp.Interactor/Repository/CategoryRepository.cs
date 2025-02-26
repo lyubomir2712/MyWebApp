@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Data.Data;
 using Data.Models;
-
+using Data.Repository.IRepository;
 namespace Data.Repository;
 
 public class CategoryRepository : Repository<Category>,  ICategoryRepository
