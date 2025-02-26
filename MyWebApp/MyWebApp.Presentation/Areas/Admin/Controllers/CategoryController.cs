@@ -69,7 +69,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = _getUpdateCategoryService?.GetUpdateCategoryAsync(_unitOfWork, id);
+        var categoryFromDb = _getUpdateCategoryService?.GetUpdateCategory(_unitOfWork, id);
         
         if (categoryFromDb == null)
         {
@@ -83,7 +83,7 @@ public class CategoryController : Controller
     {
         if (ModelState.IsValid)
         {
-            _postUpdateCategoryService?.PostUpdateCategoryServiceAsync(_unitOfWork, obj);
+            _postUpdateCategoryService?.PostUpdateCategory(_unitOfWork, obj);
             TempData["success"] = "Category updated successfully";
             return RedirectToAction("Index");
         }

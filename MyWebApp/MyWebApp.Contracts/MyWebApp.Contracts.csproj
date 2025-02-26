@@ -11,4 +11,8 @@
       <ProjectReference Include="..\MyWebApp.Interactor\MyWebApp.Interactor.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CRUDContracts\Update\Category\" />
+    </ItemGroup>
+
 </Project>

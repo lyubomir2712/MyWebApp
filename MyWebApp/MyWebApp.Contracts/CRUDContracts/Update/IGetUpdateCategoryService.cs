@@ -7,5 +7,5 @@ namespace Contracts.CRUDContracts;
 
 public interface IGetUpdateCategoryService
 {
-    public Category? GetUpdateCategoryAsync(IUnitOfWork unitOfWork, int? id);
+    public Category? GetUpdateCategory(IUnitOfWork unitOfWork, int? id);
 }

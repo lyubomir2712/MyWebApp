@@ -1,6 +1,7 @@
 using Contracts.CRUDContracts;
 using Contracts.CRUDContracts.Delete;
 using Contracts.CRUDContracts.Update;
+using Contracts.CRUDContracts.Update.Product;
 using Data.Data;
 using Data.Repository;
 using Data.Repository.IRepository;
@@ -13,6 +14,7 @@ using MyWebApp.Data.Implementation.CRUD.Create;
 using MyWebApp.Data.Implementation.CRUD.Delete;
 using MyWebApp.Data.Implementation.CRUD.Read;
 using MyWebApp.Data.Implementation.CRUD.Update;
+using MyWebApp.Data.Implementation.CRUD.Update.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +39,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 //Products CRUD
 builder.Services.AddScoped<IReadProductsService, ReadProductsService>();
-
+builder.Services.AddScoped<IGetUpdateProductService, GetUpdateProductService>();
+builder.Services.AddScoped<IPostUpdateProductService, PostUpdateProductService>();
 
 var app = builder.Build();
 

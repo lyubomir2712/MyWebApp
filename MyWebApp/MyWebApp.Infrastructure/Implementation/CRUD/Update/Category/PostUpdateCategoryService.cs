@@ -11,7 +11,7 @@ namespace MyWebApp.Data.Implementation.CRUD.Update;
 
 public class PostUpdateCategoryService : IPostUpdateCategoryService
 {
-    public void PostUpdateCategoryServiceAsync(IUnitOfWork unitOfWork, Category obj)
+    public void PostUpdateCategory(IUnitOfWork unitOfWork, Category obj)
     {
         unitOfWork.Category.Update(obj);
         unitOfWork.Save();

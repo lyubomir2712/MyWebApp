@@ -7,5 +7,5 @@ namespace Contracts.CRUDContracts.Update;
 
 public interface IPostUpdateCategoryService
 {
-    public void PostUpdateCategoryServiceAsync(IUnitOfWork unitOfWork, Category obj);
+    public void PostUpdateCategory(IUnitOfWork unitOfWork, Category obj);
 }

@@ -8,7 +8,7 @@ namespace MyWebApp.Data.Implementation.CRUD.Update;
 
 public class GetUpdateCategoryService : IGetUpdateCategoryService
 {
-    public Category? GetUpdateCategoryAsync(IUnitOfWork unitOfWork, int? id)
+    public Category? GetUpdateCategory(IUnitOfWork unitOfWork, int? id)
     {
         return unitOfWork.Category.Get(u => u.Id == id);
     }
