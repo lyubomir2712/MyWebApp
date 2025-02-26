@@ -23,7 +23,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 Env.Load();
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 builder.Configuration["ConnectionStrings:DefaultConnection"] = connectionString;
-//CRUD
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork> ();
+
+//Categories CRUD
 builder.Services.AddScoped<IReadCategoriesService, ReadCategoriesService>();
 builder.Services.AddScoped<ICreateCategoryService, CreateCategoryService>();
 builder.Services.AddScoped<IGetUpdateCategoryService, GetUpdateCategoryService>();
@@ -31,7 +34,10 @@ builder.Services.AddScoped<IPostUpdateCategoryService, PostUpdateCategoryService
 builder.Services.AddScoped<IGetDeleteCategoryService, GetDeleteCategoryService>();
 builder.Services.AddScoped<IPostDeleteCategoryService, PostDeleteCategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork> ();
+
+//Products CRUD
+builder.Services.AddScoped<IReadProductsService, ReadProductsService>();
+
 
 var app = builder.Build();
 
