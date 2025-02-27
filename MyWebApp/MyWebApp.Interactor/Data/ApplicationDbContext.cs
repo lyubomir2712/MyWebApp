@@ -29,10 +29,10 @@ public class ApplicationDbContext : DbContext
                 Description = "Comprehensive guide to C#",
                 ISBN = "9781617294532",
                 Author = "Jon Skeet",
-                ListPrice = 49.99,
-                Price = 45.99,
-                Price50 = 39.99,
-                Price100 = 34.99
+                ListPrice = 49.99m,
+                Price = 45.99m,
+                Price50 = 39.99m,
+                Price100 = 34.99m
             },
             new Product
             {
@@ -41,10 +41,10 @@ public class ApplicationDbContext : DbContext
                 Description = "Classic software development book",
                 ISBN = "9780135957059",
                 Author = "Andrew Hunt, David Thomas",
-                ListPrice = 59.99,
-                Price = 54.99,
-                Price50 = 49.99,
-                Price100 = 44.99
+                ListPrice = 59.99m,
+                Price = 54.99m,
+                Price50 = 49.99m,
+                Price100 = 44.99m
             },
         new Product
             {
@@ -53,10 +53,10 @@ public class ApplicationDbContext : DbContext
                 Description = "A Handbook of Agile Software Craftsmanship",
                 ISBN = "9780132350884",
                 Author = "Robert C. Martin",
-                ListPrice = 50.99,
-                Price = 45.99,
-                Price50 = 40.99,
-                Price100 = 35.99
+                ListPrice = 50.99m,
+                Price = 45.99m,
+                Price50 = 40.99m,
+                Price100 = 35.99m
             }
         );
     }

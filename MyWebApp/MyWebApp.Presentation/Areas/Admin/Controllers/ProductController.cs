@@ -51,7 +51,7 @@ public class ProductController : Controller
         {
             _createProductService.CreateProduct(_unitOfWork, obj);
             TempData["success"] = "Category created successfully";
-            RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         return View();
@@ -108,7 +108,7 @@ public class ProductController : Controller
         if (ModelState.IsValid)
         {
             _postDeleteProductService.PostDeleteProduct(_unitOfWork, obj);
-            TempData["success"] = "Product updated successfully";
+            TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
 

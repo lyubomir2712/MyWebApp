@@ -10,5 +10,6 @@ public class PostDeleteProductService : IPostDeleteProductService
     public void PostDeleteProduct(IUnitOfWork unitOfWork, Product obj)
     {
         unitOfWork.Product.Remove(obj);
+        unitOfWork.Save();
     }
 }

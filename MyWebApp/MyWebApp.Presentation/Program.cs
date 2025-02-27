@@ -38,6 +38,7 @@ builder.Services.AddScoped<IPostUpdateCategoryService, PostUpdateCategoryService
 builder.Services.AddScoped<IGetDeleteCategoryService, GetDeleteCategoryService>();
 builder.Services.AddScoped<IPostDeleteCategoryService, PostDeleteCategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 //Products CRUD
 builder.Services.AddScoped<IReadProductsService, ReadProductsService>();

@@ -14,6 +14,7 @@ public class UnitOfWork : IUnitOfWork
     {
         _db = db;
         Category = new CategoryRepository(_db);
+        Product = new ProductRepository(_db);
     }
     
     public void Save()

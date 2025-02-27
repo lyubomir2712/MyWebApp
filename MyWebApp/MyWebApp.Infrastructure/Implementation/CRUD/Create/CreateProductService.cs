@@ -10,5 +10,6 @@ public class CreateProductService : ICreateProductService
     public void CreateProduct(IUnitOfWork unitOfWork, Product obj)
     {
         unitOfWork.Product.Add(obj);
+        unitOfWork.Save();
     }
 }
