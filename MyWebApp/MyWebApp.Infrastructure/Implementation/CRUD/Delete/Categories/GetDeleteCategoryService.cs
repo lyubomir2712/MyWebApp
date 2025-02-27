@@ -9,7 +9,7 @@ namespace MyWebApp.Data.Implementation.CRUD;
 
 public class GetDeleteCategoryService : IGetDeleteCategoryService
 {
-    public Category? GetDeleteCategoryAsync(IUnitOfWork unitOfWork, int? id)
+    public Category? GetDeleteCategory(IUnitOfWork unitOfWork, int? id)
     {
         return unitOfWork.Category.Get(u => u.Id == id);
     }

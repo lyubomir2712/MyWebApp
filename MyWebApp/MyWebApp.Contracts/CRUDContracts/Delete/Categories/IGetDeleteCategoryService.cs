@@ -7,5 +7,5 @@ namespace Contracts.CRUDContracts.Delete;
 
 public interface IGetDeleteCategoryService
 {
-    public Category? GetDeleteCategoryAsync(IUnitOfWork unitOfWork, int? id);
+    public Category? GetDeleteCategory(IUnitOfWork unitOfWork, int? id);
 }

@@ -98,7 +98,7 @@ public class CategoryController : Controller
             return NotFound();
         }
 
-        var categoryFromDb = _getDeleteCategoryService.GetDeleteCategoryAsync(_unitOfWork, id);
+        var categoryFromDb = _getDeleteCategoryService.GetDeleteCategory(_unitOfWork, id);
         
         if (categoryFromDb == null)
         {
@@ -110,11 +110,15 @@ public class CategoryController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeletePost(int? id)
     {
-        var obj = _getDeleteCategoryService.GetDeleteCategoryAsync(_unitOfWork, id);
+        if (id == null || id == 0)
+        {
+            return NotFound();
+        }
+        var obj = _getDeleteCategoryService.GetDeleteCategory(_unitOfWork, id);
         
         if (obj == null) return NotFound();
 
-        _postDeleteCategoryService.PostDeleteCategoryAsync(_unitOfWork, obj);
+        _postDeleteCategoryService.PostDeleteCategory(_unitOfWork, obj);
         TempData["success"] = "Category deleted successfully";
         return RedirectToAction("Index");
     }

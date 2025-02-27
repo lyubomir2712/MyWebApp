@@ -7,5 +7,5 @@ namespace Contracts.CRUDContracts.Delete;
 
 public interface IPostDeleteCategoryService
 {
-    public void PostDeleteCategoryAsync(IUnitOfWork unitOfWork, Category obj);
+    public void PostDeleteCategory(IUnitOfWork unitOfWork, Category obj);
 }

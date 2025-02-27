@@ -10,7 +10,7 @@ namespace MyWebApp.Data.Implementation.CRUD.Delete;
 
 public class PostDeleteCategoryService : IPostDeleteCategoryService
 {
-    public void PostDeleteCategoryAsync(IUnitOfWork unitOfWork, Category obj)
+    public void PostDeleteCategory(IUnitOfWork unitOfWork, Category obj)
     {
         unitOfWork.Category.Remove(obj);
         unitOfWork.Save();
