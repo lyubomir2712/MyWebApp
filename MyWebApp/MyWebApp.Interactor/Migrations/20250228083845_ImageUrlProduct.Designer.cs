@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250227141819_UpdatedProductsToDecimalPrice")]
-    partial class UpdatedProductsToDecimalPrice
+    [Migration("20250228083845_ImageUrlProduct")]
+    partial class ImageUrlProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,11 +77,18 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -103,6 +110,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
@@ -110,8 +119,10 @@ namespace Data.Migrations
                         {
                             Id = 1,
                             Author = "Jon Skeet",
+                            CategoryId = 1,
                             Description = "Comprehensive guide to C#",
                             ISBN = "9781617294532",
+                            ImageUrl = "",
                             ListPrice = 49.99m,
                             Price = 45.99m,
                             Price100 = 34.99m,
@@ -122,8 +133,10 @@ namespace Data.Migrations
                         {
                             Id = 2,
                             Author = "Andrew Hunt, David Thomas",
+                            CategoryId = 1,
                             Description = "Classic software development book",
                             ISBN = "9780135957059",
+                            ImageUrl = "",
                             ListPrice = 59.99m,
                             Price = 54.99m,
                             Price100 = 44.99m,
@@ -134,14 +147,27 @@ namespace Data.Migrations
                         {
                             Id = 3,
                             Author = "Robert C. Martin",
+                            CategoryId = 1,
                             Description = "A Handbook of Agile Software Craftsmanship",
                             ISBN = "9780132350884",
+                            ImageUrl = "",
                             ListPrice = 50.99m,
                             Price = 45.99m,
                             Price100 = 35.99m,
                             Price50 = 40.99m,
                             Title = "Clean Code"
                         });
+                });
+
+            modelBuilder.Entity("Data.Models.Product", b =>
+                {
+                    b.HasOne("Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

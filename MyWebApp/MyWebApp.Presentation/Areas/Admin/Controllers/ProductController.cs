@@ -1,9 +1,12 @@
+using System.Collections;
 using Contracts.CRUDContracts;
 using Contracts.CRUDContracts.Delete.Products;
 using Contracts.CRUDContracts.Update.Product;
 using Data.Models;
 using Data.Repository.IRepository;
+using Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyWebApp.Data.Contracts.CRUDcontracts;
 
 namespace MyWebApp.Areas.Admin.Controllers;
@@ -36,22 +39,46 @@ public class ProductController : Controller
     public IActionResult Index()
     {
         var objProductList = _readProductsService.GetAllProductsAsync(_unitOfWork);
+        IEnumerable<SelectListItem> CategoryList= _unitOfWork.Category.GetAll().Select(u => new SelectListItem()
+        {
+            Text = u.Name,
+            Value = u.Id.ToString()
+        });
         return View(objProductList);
     }
 
     public IActionResult Create()
     {
-        return View();
+        IEnumerable<SelectListItem> CategoryList= _unitOfWork.Category.GetAll().Select(u => new SelectListItem()
+        {
+            Text = u.Name,
+            Value = u.Id.ToString()
+        });
+        ProductVM productVM = new()
+        {
+            CategoryList = CategoryList,
+            Product = new Product()
+        };
+        return View(productVM);
     }
 
     [HttpPost]
-    public IActionResult Create(Product obj)
+    public IActionResult Create(ProductVM productVm)
     {
         if (ModelState.IsValid)
         {
-            _createProductService.CreateProduct(_unitOfWork, obj);
+            _createProductService.CreateProduct(_unitOfWork, productVm.Product);
             TempData["success"] = "Category created successfully";
             return RedirectToAction("Index");
+        }
+        else
+        {
+            productVm.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem() 
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+            return View(productVm);
         }
 
         return View();

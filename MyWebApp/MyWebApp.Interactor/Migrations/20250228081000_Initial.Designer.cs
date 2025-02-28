@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250226140235_ProductSeed")]
-    partial class ProductSeed
+    [Migration("20250228081000_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,9 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -85,23 +88,25 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ListPrice")
-                        .HasColumnType("float");
+                    b.Property<decimal>("ListPrice")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("Price100")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price100")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("Price50")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price50")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
 
@@ -110,38 +115,52 @@ namespace Data.Migrations
                         {
                             Id = 1,
                             Author = "Jon Skeet",
+                            CategoryId = 1,
                             Description = "Comprehensive guide to C#",
                             ISBN = "9781617294532",
-                            ListPrice = 49.990000000000002,
-                            Price = 45.990000000000002,
-                            Price100 = 34.990000000000002,
-                            Price50 = 39.990000000000002,
+                            ListPrice = 49.99m,
+                            Price = 45.99m,
+                            Price100 = 34.99m,
+                            Price50 = 39.99m,
                             Title = "C# in Depth"
                         },
                         new
                         {
                             Id = 2,
                             Author = "Andrew Hunt, David Thomas",
+                            CategoryId = 1,
                             Description = "Classic software development book",
                             ISBN = "9780135957059",
-                            ListPrice = 59.990000000000002,
-                            Price = 54.990000000000002,
-                            Price100 = 44.990000000000002,
-                            Price50 = 49.990000000000002,
+                            ListPrice = 59.99m,
+                            Price = 54.99m,
+                            Price100 = 44.99m,
+                            Price50 = 49.99m,
                             Title = "The Pragmatic Programmer"
                         },
                         new
                         {
                             Id = 3,
                             Author = "Robert C. Martin",
+                            CategoryId = 1,
                             Description = "A Handbook of Agile Software Craftsmanship",
                             ISBN = "9780132350884",
-                            ListPrice = 50.990000000000002,
-                            Price = 45.990000000000002,
-                            Price100 = 35.990000000000002,
-                            Price50 = 40.990000000000002,
+                            ListPrice = 50.99m,
+                            Price = 45.99m,
+                            Price100 = 35.99m,
+                            Price50 = 40.99m,
                             Title = "Clean Code"
                         });
+                });
+
+            modelBuilder.Entity("Data.Models.Product", b =>
+                {
+                    b.HasOne("Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
