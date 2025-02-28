@@ -47,7 +47,7 @@ public class ProductController : Controller
         return View(objProductList);
     }
 
-    public IActionResult Create()
+    public IActionResult Upsert(int? id)
     {
         IEnumerable<SelectListItem> CategoryList= _unitOfWork.Category.GetAll().Select(u => new SelectListItem()
         {
@@ -59,11 +59,21 @@ public class ProductController : Controller
             CategoryList = CategoryList,
             Product = new Product()
         };
+
+        if (id == null || id == 0)
+        {
+            return View(productVM);
+        }
+        else
+        {
+            productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+            return View(productVM);
+        }
         return View(productVM);
     }
 
     [HttpPost]
-    public IActionResult Create(ProductVM productVm)
+    public IActionResult Upsert(ProductVM productVm, IFormFile? file)
     {
         if (ModelState.IsValid)
         {
