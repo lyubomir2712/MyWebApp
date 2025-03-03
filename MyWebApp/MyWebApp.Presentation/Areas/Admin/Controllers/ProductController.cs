@@ -17,23 +17,19 @@ public class ProductController : Controller
     private readonly IUnitOfWork _unitOfWork;
     private readonly IReadProductsService _readProductsService;
     private readonly ICreateProductService _createProductService;
-    private readonly IGetUpdateProductService _getUpdateProductService;
-    private readonly IPostUpdateProductService _postUpdateProductService;
     private readonly IGetDeleteProductService _getDeleteProductService;
     private readonly IPostDeleteProductService _postDeleteProductService;
+    private readonly IWebHostEnvironment _webHostEnvironment;
     public ProductController(IUnitOfWork unitOfWork, ICreateProductService createProductService,
-        IReadProductsService readProductsService, IGetUpdateProductService getUpdateProductService,
-        IPostUpdateProductService postUpdateProductService, IGetDeleteProductService getDeleteProductService,
-        IPostDeleteProductService postDeleteProductService)
+        IReadProductsService readProductsService, IGetDeleteProductService getDeleteProductService,
+        IPostDeleteProductService postDeleteProductService, IWebHostEnvironment webHostEnvironment)
     {
         _unitOfWork = unitOfWork;
         _readProductsService = readProductsService;
-        _postUpdateProductService = postUpdateProductService;
-        _getUpdateProductService = getUpdateProductService;
-        _postUpdateProductService = postUpdateProductService;
         _getDeleteProductService = getDeleteProductService;
         _postDeleteProductService = postDeleteProductService;
         _createProductService = createProductService;
+        _webHostEnvironment = webHostEnvironment;
     }
     // GET
     public IActionResult Index()
@@ -64,11 +60,8 @@ public class ProductController : Controller
         {
             return View(productVM);
         }
-        else
-        {
-            productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
-            return View(productVM);
-        }
+        
+        productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
         return View(productVM);
     }
 
@@ -77,53 +70,52 @@ public class ProductController : Controller
     {
         if (ModelState.IsValid)
         {
-            _createProductService.CreateProduct(_unitOfWork, productVm.Product);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string productPath = Path.Combine(wwwRootPath, @"images/product");
+
+                if (!string.IsNullOrEmpty(productVm.Product.ImageUrl))
+                {
+                    var oldImagePath = 
+                        Path.Combine(wwwRootPath, productVm.Product.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+                
+                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                productVm.Product.ImageUrl = @"\images\product" + fileName;
+            }
+
+            if (productVm.Product.Id == 0)
+            {
+                _createProductService.CreateProduct(_unitOfWork, productVm.Product);
+            }
+            else
+            {
+                _unitOfWork.Product.Update(productVm.Product);
+            }
+            
             TempData["success"] = "Category created successfully";
             return RedirectToAction("Index");
         }
-        else
-        {
-            productVm.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem() 
+        
+        
+        productVm.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem() 
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 });
             return View(productVm);
-        }
-
-        return View();
     }
     
-    public IActionResult Edit(int? id)
-    {
-        if (id == null || id == 0)
-        {
-            return NotFound();
-        }
-        
-        var categoryFromDb = _getUpdateProductService.GetUpdateProduct(_unitOfWork, id);
-        
-        if (categoryFromDb == null)
-        {
-            return NotFound();
-        }
-
-        return View(categoryFromDb);
-    }
-
-    [HttpPost]
-    public IActionResult Edit(Product obj)
-    {
-        if (ModelState.IsValid)
-        {
-            _postUpdateProductService.PostUpdateProduct(_unitOfWork, obj);
-            TempData["success"] = "Product updated successfully";
-            return RedirectToAction("Index");
-        }
-
-        return View();
-    }
-
     public IActionResult Delete(int? id)
     {
         if (id == null || id == 0)
